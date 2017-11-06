@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Teste Animado</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+    <canvas id="mycanvas" width="800" height="600" style="border:2px solid black">
+            Not Supported
+        </canvas>
+    <script type="text/javascript">
+        var ctx = document.getElementById("mycanvas").getContext("2d");
+        var cL = ctx.canvas.width;
+        var cA = ctx.canvas.height;
+
+        //definiçao de um quadrado grafico
+        function quadrado(ctx) {
+            this.ctx = ctx;
+            this.x = 0;
+            this.y = 0;
+            this.velocidadeX = 0;
+            this.velocidadeY = 0;
+            this.cor = "blue";
+            this.lado = 0;
+        }
+        quadrado.prototype = {
+            atualizar: function() {
+                //verifica posicao X
+                if (this.x < 0   || this.x > cL - this.lado) {
+                    this.velocidadeX *= -1;
+                }
+                //verifica posicap Y
+                if (this.y < 0 || this.y > cA - this.lado) {
+                    this.velocidadeY *= -1;
+                }
+
+                //move o quadrado na velocidade configurada
+                this.x += this.velocidadeX;
+                this.y += this.velocidadeY;
+            },
+            desenhar: function() {
+                this.ctx = ctx;
+                ctx.save();
+                ctx.fillStyle = this.cor;
+                ctx.beginPath();
+                ctx.rect(this.x, this.y, this.lado, this.lado);
+                ctx.fill();
+                ctx.restore();
+            }
+            //fim dos metodos do objeto quadrado.
+        }
+
+        //inicio da logica 
+
+        var q1 = new quadrado(document.getElementById("mycanvas").getContext("2d"));
+        q1.cor = "blue";
+        q1.lado = 5;
+        this.x = 20;
+        this.y = 2;
+        q1.velocidadeX = 16;
+        q1.velocidadeY = 4;
+        
+        var q2 = new quadrado(ctx);
+            q2.cor = 'red';
+            q2.lado = 20;
+            this.x = 300;
+            this.y = 100;
+            q2.velocidadeX = -6;
+            q2.velocidadeY = 1;
+        
+        var q3 = new quadrado(ctx);
+            q3.cor = 'green';
+            q3.lado = 30;
+            q3.velocidadeX = -5;
+            q3.velocidadeY = 2;
+        
+        var q4 = new quadrado(ctx);
+            q4.cor = 'purple';
+            q4.lado = 40;
+            q4.velocidadeX = -3;
+            q4.velocidadeY = 1;
+        
+        var q5 = new quadrado(ctx);
+            q5.cor = 'orange';
+            q5.lado = 100;
+            q5.velocidadeX = 1;
+            q5.velocidadeY = 1;
+
+        //fluxo da animaçao
+        function animate() {
+            ctx.clearRect(0, 0, cL, cA);
+            q1.atualizar();
+            q2.atualizar();
+            q3.atualizar();
+            q4.atualizar();
+            q5.atualizar();
+            q1.desenhar();
+            q2.desenhar();
+            q3.desenhar();
+            q4.desenhar();
+            q5.desenhar();
+            window.requestAnimationFrame(animate);
+        }
+
+        window.requestAnimationFrame(animate);
+
+    </script>
+
+
+
+</body>
+
+</html>
